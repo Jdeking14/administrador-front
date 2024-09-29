@@ -33,7 +33,7 @@ export class RegistroComponent {
   constructor(private authService: AuthService, private route: ActivatedRoute, private modalService: NgbModal,  private usuariosService: UsuariosService, private router: Router) {
     this.usuario = {
       user_id: 0,
-      first_name: '',
+      firstName: '',
       last_name: '',
       username: '',
       email: '',
@@ -62,7 +62,7 @@ export class RegistroComponent {
   onSubmit(registroForm: NgForm) {
     if (registroForm.valid) {
       // Asignar valores predeterminados en caso de que alguna propiedad sea undefined
-      const safeFirstName = this.usuario.first_name ?? '';
+      const safeFirstName = this.usuario.firstName ?? '';
       const safeLastName = this.usuario.last_name ?? '';
       const safeEmail = this.usuario.email ?? '';
       const safePassword = this.usuario.password ?? '';
@@ -78,7 +78,6 @@ export class RegistroComponent {
               icon: 'success',
               confirmButtonText: 'Aceptar'
             });
-            this.router.navigate(['/login']);
           },
           error: (error) => {
             console.error('Error en el registro', error);
@@ -150,7 +149,7 @@ export class RegistroComponent {
     console.log(usuario);
     this.usuario.user_id = usuario.id;
     this.usuario.email = usuario.email;
-    this.usuario.first_name = usuario.firstName;
+    this.usuario.firstName = usuario.firstName;
     this.usuario.last_name = usuario.lastName;
     console.log(this.usuario);
   }

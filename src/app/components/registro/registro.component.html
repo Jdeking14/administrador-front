@@ -3,7 +3,7 @@
   <form #registroForm="ngForm" (ngSubmit)="onSubmit(registroForm)">
     <div class="form-group">
       <label for="first_name">Nombre:</label>
-      <input type="text" id="first_name" name="first_name" [(ngModel)]="usuario.first_name" required #firstName="ngModel">
+      <input type="text" id="first_name" name="first_name" [(ngModel)]="usuario.firstName" required #firstName="ngModel">
       <div *ngIf="firstName.invalid && firstName.touched">
         <small class="text-danger">Nombre es requerido.</small>
       </div>

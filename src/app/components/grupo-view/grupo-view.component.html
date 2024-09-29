@@ -58,7 +58,9 @@
                         <div class="modal-body">
                           <form #form="ngForm" (ngSubmit)="sendInputs(form)">
                             <div>
-                              <input type="email" class="form-control mb-2" [(ngModel)]="email" name="email" required placeholder="Correo Electrónico">
+                                <select class="form-control mb-2" [(ngModel)]="selectedUser" name="email" required>
+                                    <option *ngFor="let user of users" [value]="user.email">{{ user.firstName }}</option>
+                                  </select>                                  
                             </div>
                             <input type="hidden" [(ngModel)]="group.id" name="groupId">
                             <div class="modal-footer">

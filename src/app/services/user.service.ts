@@ -10,7 +10,7 @@ export class UsuariosService {
   @Output() authEventEmiter: EventEmitter<void | string> = new EventEmitter()
   @Output() userEmitter: EventEmitter<any> = new EventEmitter()
 
-  private authUrl: string = 'http://localhost:3030/api/auth/login';
+  private authUrl: string = 'http://localhost:3030/api/auth';
   private registerUrl: string = 'http://localhost:3030/api/auth/register';
   private usersUrl: string = 'http://localhost:3030/api/user';
 
@@ -18,9 +18,10 @@ export class UsuariosService {
   private httpClient = inject(HttpClient);
 
    // Nuevos métodos para login y registro usando el mismo endpoint
-  login(credentials: { email: string, password: string }): Observable<any> {
-    return this.httpClient.post<any>(this.authUrl, credentials);
-  }
+  login(id: number){
+    return firstValueFrom(
+      this.httpClient.get<any>(`${this.authUrl}/${id}`) 
+    ) }
 
   register(firstName: string, lastName: string, phoneNumber: string, email: string, password: string, ind_baja: number): Observable<any> {
     return this.httpClient.post<any>(this.registerUrl, {
@@ -52,7 +53,10 @@ export class UsuariosService {
       return firstValueFrom(
         this.httpClient.get<any>(`${this.usersUrl}/${id}`) 
       ) 
-        
+    }
+
+    getAll(): Promise<Usuario[]> { 
+      return firstValueFrom(this.httpClient.get<Usuario[]>(this.usersUrl));
     }
     
 }

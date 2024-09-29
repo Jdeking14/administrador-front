@@ -11,6 +11,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { catchError, of, tap } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 import { UsuariosService } from '../../services/user.service';
+import { Usuario } from '../../interfaces/iusuario';
 
 
 
@@ -35,6 +36,8 @@ export class GrupoViewComponent {
   authService = inject(AuthService)
   user: any = {}
   groupLoaded: boolean = false
+  users: Usuario[] = []; 
+  selectedUser: string = ''; 
 
   
 
@@ -66,10 +69,24 @@ export class GrupoViewComponent {
         console.log(this.isAdmin)
         this.user = userData
         this.groupLoaded = true
+        this.loadUsers()
       } catch (error) {
         this.router.navigate(['/home'])
       }
-    })
+    });
+    
+
+  }
+
+  loadUsers() {
+    this.userService.getAll().then((data: Usuario[]) => {
+      this.users = data; // Asigna los usuarios a la variable `users`
+      if (this.users.length > 0) {
+        this.selectedUser = this.users[0].firstName; // Asigna el primer usuario como seleccionado
+      }
+    }).catch(error => {
+      console.error('Error al cargar los usuarios:', error);
+    });
   }
 
  
@@ -131,13 +148,16 @@ export class GrupoViewComponent {
    * Uso tap para enviar cada email
    */
   sendInputs(form: NgForm) {
+    const usuario = this.users.find(user => user.email === this.selectedUser);
+    this.email = usuario ? usuario.email : '';
+    const name = usuario ? usuario.firstName : '';
     if (form.valid) {
       const payload = { email: this.email, groupId: form.value.groupId, percent: 0 };
       this.groupService.sendInputs(payload).pipe(
         tap(response => {
           Swal.fire({
             title: '¡Éxito!',
-            text: `Se ha invitado a ${this.email} correctamente.`,
+            text: `Se ha invitado a ${name} correctamente.`,
             icon: 'success',
             confirmButtonText: 'OK'
           });
