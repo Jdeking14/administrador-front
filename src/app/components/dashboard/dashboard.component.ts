@@ -4,7 +4,7 @@ import { PagosService } from '../../services/pagos.service';
 import { GroupService } from '../../services/group.service';
 import { Usuario } from '../../interfaces/iusuario';
 import { FormsModule } from '@angular/forms';
-import { CurrencyPipe, DecimalPipe, JsonPipe, PercentPipe } from '@angular/common';
+import { CurrencyPipe, DecimalPipe, JsonPipe } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { EditMembersGroupComponent } from '../edit-members-group/edit-members-group.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -14,7 +14,7 @@ import { UsuariosService } from '../../services/user.service';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [FormsModule, DecimalPipe, PercentPipe, CurrencyPipe, JsonPipe, EditMembersGroupComponent],
+  imports: [FormsModule, DecimalPipe, CurrencyPipe, JsonPipe, EditMembersGroupComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })

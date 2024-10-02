@@ -15,19 +15,6 @@
                     <small>{{m.email}}</small>
                 </div>
                 <div class="d-flex justify-content-between gap-2">
-                    <div>
-                        <label for="porcentaje-{{m.id}}"><small>Percentaje</small></label>
-                        <input type="number" class="form-control" id="porcentaje-{{m.id}}" name="porcentaje-{{m.id}}" [placeholder]="1/members.length | percent" formControlName="{{m.id}}" required>
-                        @if(checkError(m.id,'required')){
-                            <small class="text-danger">Required</small>
-                        }
-                        @if(checkError(m.id,'max')){
-                            <small class="text-danger">Max percentaje allowed is 100%</small>
-                        }
-                        @if(checkError(m.id,'min')){
-                            <small class="text-danger">Min percentaje allowed is 0%</small>
-                        }
-                    </div>
                     <div class="w-25 d-flex align-items-center justify-content-center">
                         <button type="button" class="btn btn-danger bi bi-trash3" (click)="onMemberDelete(m)" [disabled]="m.id === user.id"></button>
                     </div>

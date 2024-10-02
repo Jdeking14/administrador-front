@@ -11,6 +11,7 @@ import { AuthService } from '../../services/auth.service';
 import { IGroup } from '../../interfaces/igroup';
 import { GroupService } from '../../services/group.service';
 import { CurrencyPipe } from '@angular/common';
+import { Imember } from '../../interfaces/imember';
 
 
 @Component({
@@ -22,8 +23,9 @@ import { CurrencyPipe } from '@angular/common';
 })
 export class GastosCardComponent {
   @Input() miSpent!: Iactivity;
-    @Output() spentUpdated = new EventEmitter<Iactivity>(); // Evento de salida
-    @Input() members: any[] = []; // Agrega esto para recibir la lista de miembros
+  @Output() spentUpdated = new EventEmitter<Iactivity>(); // Evento de salida
+  @Output() spentCreated = new EventEmitter<void>();
+  @Input() members: any[] = []; // Agrega esto para recibir la lista de miembros
 
   @Output() spendDeleted = new EventEmitter<number>();
   activatedRoute = inject(ActivatedRoute)
@@ -41,6 +43,7 @@ export class GastosCardComponent {
     "idGroup": 0,
     }
   ];
+
 
   router = inject(Router);
   pagosService = inject(PagosService);
@@ -172,5 +175,38 @@ export class GastosCardComponent {
 
   checkControl(formControlName: string, validador: string):boolean | undefined {
     return this.spentsForm.get(formControlName)?.hasError(validador) && this.spentsForm.get(formControlName)?.touched;
+  }
+
+  async onCheckboxChange(member: any) {
+    console.log('El miembro con id ' , member.id , member.firstName, this.miSpent.id , 'está', member.isChecked ? 'seleccionado' : 'deseleccionado');
+    
+    const payload = { idUser: member.id, idActivitie: this.miSpent.id, seleccionado: member.isChecked};
+    if(member.isChecked){
+    try {
+      await this.pagosService.insertUser(payload).then(Response =>{
+        this.spentsForm.reset();
+        this.spentCreated.emit();
+      }); // Pasamos directamente el objeto
+      console.log('Gasto creado con éxito');
+      console.log('Nuevo gasto:', payload);
+      this.spentCreated.emit();
+      this.spentsForm.reset();
+    } catch (error) {
+      console.error('Error al crear el gasto', error);
+    }
+  }else{
+    try {
+      await this.pagosService.deleteUserAct(payload).then(Response =>{
+        this.spentsForm.reset();
+        this.spentCreated.emit();
+      }); // Pasamos directamente el objeto
+      console.log('Gasto creado con éxito');
+      console.log('Nuevo gasto:', payload);
+      this.spentCreated.emit();
+      this.spentsForm.reset();
+    } catch (error) {
+      console.error('Error al crear el gasto', error);
+    }
+  }
   }
 }

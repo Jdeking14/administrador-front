@@ -2,19 +2,19 @@
 
 <div class="card col-8">
   <div class="card-header">
-    Control Dashboard
+    Panel de control
   </div>
   <div class="card-body d-flex flex-column justify-content-between align-items-center">
     <div class="d-flex w-100 gap-3">
       <div class="border border-primary rounded h-100 w-75">
-        <p><b>Members</b></p>
+        <p><b>Miembros</b></p>
         <hr class="my-1 text-primary">
         <div class="d-flex justify-content-center">
           <p class="text-primary fs-1 w-100 m-2">{{members.length}}</p>
         </div>
       </div>
       <div class="border border-success rounded h-100 w-75">
-        <p><b>Total Amount</b></p>
+        <p><b>Total gastado</b></p>
         <hr class="my-1 text-success">
         <div class="d-flex justify-content-center">
           <p class="text-success fs-1 w-100 m-2">{{totalAmount | currency: 'EUR'}}</p>
@@ -23,8 +23,8 @@
     </div>
     @if(user.isAdmin){
       <div class="d-flex w-100 justify-content-around p-2 gap-3">
-        <button class="w-50 btn btn-primary" (click)="open(content)">Edit members</button>
-        <button class="w-50 btn btn-danger" (click)="onDeleteAllPayments()" >Delete all payments</button>
+        <button class="w-50 btn btn-primary" (click)="open(content)">Editar miembros</button>
+        <!--<button class="w-50 btn btn-danger" (click)="onDeleteAllPayments()" >Eliminar todos los pagos</button>-->
       </div>
     }
     <ng-template #content let-modal>

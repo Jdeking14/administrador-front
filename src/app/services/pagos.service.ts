@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { firstValueFrom, lastValueFrom, BehaviorSubject } from 'rxjs';
 import { Iactivity } from '../interfaces/iactivity';
 
@@ -10,7 +10,8 @@ import { Iactivity } from '../interfaces/iactivity';
 export class PagosService {
   httpClient = inject(HttpClient);
   urlBase = 'http://localhost:3030/api/activity';
-
+  urlUserHasAct = 'http://localhost:3030/api/userHasActivity';
+  
  
 
   getAll(): Promise<Iactivity[]> { 
@@ -35,12 +36,21 @@ export class PagosService {
     return lastValueFrom(this.httpClient.post<Iactivity>(`${this.urlBase}/register`, fromValue));
   }
 
+  insertUser(fromValue:any){
+    return lastValueFrom(this.httpClient.post<any>(`${this.urlUserHasAct}/registerUser`, fromValue));
+  }
+
+  deleteUserAct(fromValue:any){
+    const params = new HttpParams()
+    .set('idUser', fromValue.idUser)
+    .set('idActivitie', fromValue.idActivitie)
+    .set('seleccionado', fromValue.seleccionado);
+    return lastValueFrom(this.httpClient.delete<any>(`${this.urlUserHasAct}/deleteUser`,{params}));
+  }
+
   getByGroup(idGroup: number): Promise<Iactivity[]> {
     return firstValueFrom(this.httpClient.get<Iactivity[]>(`${this.urlBase}/${idGroup}`));
   }
-
-  // En tu servicio pagosService
-
 
 
 }

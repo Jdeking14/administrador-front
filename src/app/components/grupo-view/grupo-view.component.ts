@@ -152,7 +152,7 @@ export class GrupoViewComponent {
     this.email = usuario ? usuario.email : '';
     const name = usuario ? usuario.firstName : '';
     if (form.valid) {
-      const payload = { email: this.email, groupId: form.value.groupId, percent: 0 };
+      const payload = { email: this.email, groupId: form.value.groupId};
       this.groupService.sendInputs(payload).pipe(
         tap(response => {
           Swal.fire({

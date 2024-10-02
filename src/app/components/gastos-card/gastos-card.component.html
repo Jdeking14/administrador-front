@@ -5,10 +5,18 @@
       <div class="row justify-content-center shadow p-2 rounded  " >
           @if (!editing) {
             <div class="col-5">
-                <h3>{{miSpent.name}}</h3>
-                <p>{{miSpent.date}}</p>
-                <p>{{payer.firstName}}</p>
+                <h4>Concepto: {{miSpent.name}}</h4>
+                <p>Fecha: {{miSpent.date}}</p>
+                <p>Pagador: {{payer.firstName}}</p>
+                <div>
+                Afectados:  @for(member of members; track member.id){
+                    <input type="checkbox" id="member_{{member.id}}" [(ngModel)]="member.isChecked" (change)="onCheckboxChange(member)">
+                    <label for="member_{{member.id}}">{{member.firstName}}</label>
+                  
+                }
+                </div>
             </div>
+                  
             <div class="col-5 text-end ">
               <h4 class="align-middle pt-lg-2 text-primary">{{miSpent.amount | currency: 'EUR'}}</h4>
             </div>
